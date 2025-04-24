@@ -13,15 +13,34 @@ function Login() {
 
     // Used to Sign in with google
 
+    // const signInWithGoogle = async () => {
+    //     const { error } = await supabase.auth.signInWithOAuth({
+    //         provider: 'google'
+    //     })
+
+    //     if (error) {
+    //         console.error('Error signing in with Google:', error.message)
+    //     }
+    // }
     const signInWithGoogle = async () => {
+        const redirectTo = typeof window !== 'undefined' && window.location.origin
+            ? `${window.location.origin}/dashboard`
+            : undefined;
+
         const { error } = await supabase.auth.signInWithOAuth({
-            provider: 'google'
-        })
+            provider: 'google',
+            options: {
+                redirectTo,
+            },
+        });
 
         if (error) {
-            console.error('Error signing in with Google:', error.message)
+            console.error('Error signing in with Google:', error.message);
         }
-    }
+    };
+
+
+
 
     return (
         <div className='flex flex-col items-center  h-screen justify-center bg-gray-100 gradient-background2'>
